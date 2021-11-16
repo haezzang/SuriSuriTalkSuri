@@ -47,11 +47,12 @@ public class surichoice {
 		f.add(b3);
         f.setLayout( null );
         
+        //버튼위치
         exit.setBounds( 50, 50, 120, 50);
         b1.setBounds( 200, 800, 300, 80);
         b2.setBounds( 800, 800, 300, 80);
         b3.setBounds( 1400, 800, 300, 80);
-        
+        //폰트 설정
         exit.setFont(font);
         b1.setFont(font);
         b2.setFont(font);
