@@ -1,8 +1,7 @@
-package SuriChoice;
-
-import javax.swing.JFrame;
+package chat;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -11,66 +10,75 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
+import choice.choice;
 
+public class worry_suri {
 
-public class surichoice {     
-
-
-	static Image background;
-     public static void main(String[] args) {   
-    	 Font font=new Font("나눔고딕",Font.PLAIN,28);
-    	 
-    	background=new ImageIcon(surichoice.class.getResource("../testimage/background.png")).getImage();
-    	 
+    public static void main(String[] args) {
     	
-    	
-        JFrame f = new JFrame();        
-        f.setVisible(true);             
-        f.setTitle("수리수리톡수리");
-		f.setLocation(500,200);
-		f.setSize(1980, 1080);
-		f.setVisible(true);
+        // 프레임 생성
+        JFrame frm = new JFrame("수리 선택하기");
+ 
+        // 프레임 크기 설정
+        frm.setSize(1980, 1080);
 
-		RoundedButton exit = new RoundedButton("이전", 0);
-		RoundedButton b1 = new RoundedButton("톡하기");
-		RoundedButton b2 = new RoundedButton("톡하기");
-		RoundedButton b3 = new RoundedButton("톡하기");
-       
-      
-		f.add(exit);
-		f.add(b1);
-		f.add(b2);
-		f.add(b3);
-        f.setLayout( null );
+        // 프레임을 화면 가운데에 배치
+        frm.setLocationRelativeTo(null);
         
+        // 프레임을 닫았을 때 메모리에서 제거되도록 설정
+        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 
+        // 프레임이 보이도록 설정
+        frm.setVisible(true);
+        
+        FlowLayout fLay = new FlowLayout();
+        frm.getContentPane().setLayout(fLay);
+        
+        // 레이아웃 설정
+        frm.getContentPane().setLayout(null);
+        
+    	RoundedButton exit = new RoundedButton("이전", 0);    
+
+		 Font font=new Font("나눔고딕",Font.PLAIN,28);
+		 
         //버튼위치
         exit.setBounds( 50, 50, 120, 50);
-        b1.setBounds( 200, 800, 300, 80);
-        b2.setBounds( 800, 800, 300, 80);
-        b3.setBounds( 1400, 800, 300, 80);
-        //폰트 설정
-        exit.setFont(font);
-        b1.setFont(font);
-        b2.setFont(font);
-        b3.setFont(font);
+        exit.setFont(font); 
+        exit.setBackground(new Color(241,76,76));      
+		frm.getContentPane().add(exit);
+
         
-        exit.setBackground(new Color(241,76,76));
-        b1.setBackground(new Color(51,203,51));
-        b2.setBackground(new Color(51,203,51));
-        b3.setBackground(new Color(51,203,51));
-    }   
-     public void paint(Graphics g) {//그리는 함수
- 	
-		g.drawImage(background, 0, 0, null);//background를 그려줌
- 	}
+		
+		
+
+	 JLabel chatview = new JLabel();
+	 chatview.setOpaque(true);
+	 chatview.setBackground(new Color(4,34,83));
+
+	 chatview.setBounds(0, 0, 1980, 1080); 
+	 chatview.setHorizontalAlignment(JLabel.CENTER); 
+	 frm.getContentPane().add(chatview);
+	
+	        
+
+        // 프레임이 보이도록 설정
+        frm.setVisible(true);
+    }
+    
+
+ 
 }
 
 
- class RoundedButton extends JButton {
+
+
+class RoundedButton extends JButton {
 
 	Color c; //배경색 초기화
 	int r;
@@ -84,7 +92,7 @@ public class surichoice {
 	public RoundedButton(String text) {
 		super(text);
 		c=new Color(51,203,51);
-		r=80;
+		r=0;
 		decorate();
 	}
 
@@ -122,4 +130,3 @@ public class surichoice {
 		super.paintComponent(g);
 	}
 }
-
