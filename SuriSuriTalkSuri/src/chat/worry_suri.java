@@ -11,12 +11,16 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.TextField;
+import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import choice.choice;
 
@@ -36,36 +40,71 @@ public class worry_suri {
         // 프레임을 닫았을 때 메모리에서 제거되도록 설정
         frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
-        Font font=new Font("나눔고딕",Font.PLAIN,28);
-		 
-        FlowLayout fLay = new FlowLayout();
-        frm.getContentPane().setLayout(fLay);
         
+        //폰트설정
+        Font font=new Font("나눔고딕",Font.PLAIN,28); //버튼부분
+        Font font1=new Font("나눔고딕",Font.PLAIN,35); //입력부분
+        Font font2=new Font("나눔고딕",Font.PLAIN,30); //채팅부분
+
         // 레이아웃 설정
-        frm.getContentPane().setLayout(null);
-        //텍스트필드 생성
-        JTextField tf1=new JTextField(15);
-        frm.getContentPane().add(tf1);
+        //frm.getContentPane().setLayout(null);
         
+        
+        //텍스트area 생성(채팅)       
+        JTextArea ta1=new JTextArea(10,20);
+        JScrollPane scrollPane=new JScrollPane(ta1,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        ta1.setFont(font2); 
+        
+        scrollPane.setBounds(700,150,1000,650);
+        frm.add(scrollPane);
+        scrollPane.setVisible(true);
+     
+        
+        
+        //텍스트필드 생성
+        RoundJTextField tf1=new RoundJTextField(30);
+        frm.getContentPane().add(tf1);
+		tf1.setLayout(null);
+		tf1.setBounds(720, 805, 900, 40);
+		tf1.setFont(font1); 
 
     	RoundedButton exit = new RoundedButton("이전", 0);    
     	RoundedButton send = new RoundedButton("▲");    
-        //버튼위치
+    	
+    	
+        //버튼설정
         exit.setBounds( 50, 50, 120, 50);
         exit.setFont(font); 
         exit.setBackground(new Color(241,76,76));      
 		frm.getContentPane().add(exit);
-		send.setBounds( 300, 0, 50, 50);
+		send.setBounds( 1630, 800, 50, 50);
 		send.setFont(font); 
 		frm.getContentPane().add(send);
 
 		
-		  ImageIcon chatimg = new
+		 /* ImageIcon chatimg = new
 		  ImageIcon(worry_suri.class.getResource("../testimage/채팅화면.png")); JLabel
 		  chatview = new JLabel(); chatview.setBounds(0, 0, 1980, 1080);
 		  frm.getContentPane().add(chatview); chatview.setIcon(chatimg);
-		  chatview.setBounds(150, 150, 1000, 700);
-		  chatview.setHorizontalAlignment(JLabel.RIGHT);
+		  chatview.setBounds(700, 150, 1000, 700);
+		  chatview.setHorizontalAlignment(JLabel.RIGHT);*/
+		  
+		
+		  JLabel grayback = new JLabel(); grayback.setOpaque(true); 
+		  grayback.setBackground(Color.LIGHT_GRAY); 
+		  grayback.setBounds(700, 800, 1000, 50);
+		  grayback.setHorizontalAlignment(JLabel.RIGHT);
+		  frm.getContentPane().add(grayback);
+
+		  
+
+		  JLabel whiteback = new JLabel(); whiteback.setOpaque(true); 
+		  whiteback.setBackground(new Color(255,255,255)); 
+		  whiteback.setBounds(700, 150, 1000, 700);
+		  whiteback.setHorizontalAlignment(JLabel.RIGHT);
+		  frm.getContentPane().add(whiteback);
+
 
 		 
 		 
@@ -90,7 +129,28 @@ frm.setVisible(true);
 }
 
 
-
+class RoundJTextField extends JTextField {
+    private Shape shape;
+    public RoundJTextField(int size) {
+        super(size);
+        setOpaque(false); // As suggested by @AVD in comment.
+    }
+    protected void paintComponent(Graphics g) {
+         g.setColor(getBackground());
+         g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+         super.paintComponent(g);
+    }
+    protected void paintBorder(Graphics g) {
+         g.setColor(getForeground());
+         g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+    }
+    public boolean contains(int x, int y) {
+         if (shape == null || !shape.getBounds().equals(getBounds())) {
+             shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);
+         }
+         return shape.contains(x, y);
+    }
+}
 
 class RoundedButton extends JButton {
 
