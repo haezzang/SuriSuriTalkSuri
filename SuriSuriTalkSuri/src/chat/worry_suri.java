@@ -6,16 +6,18 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.TextField;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-
+import javax.swing.JTextField;
 import choice.choice;
 
 public class worry_suri {
@@ -34,41 +36,53 @@ public class worry_suri {
         // 프레임을 닫았을 때 메모리에서 제거되도록 설정
         frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
-        // 프레임이 보이도록 설정
-        frm.setVisible(true);
-        
+        Font font=new Font("나눔고딕",Font.PLAIN,28);
+		 
         FlowLayout fLay = new FlowLayout();
         frm.getContentPane().setLayout(fLay);
         
         // 레이아웃 설정
         frm.getContentPane().setLayout(null);
+        //텍스트필드 생성
+        JTextField tf1=new JTextField(15);
+        frm.getContentPane().add(tf1);
         
-    	RoundedButton exit = new RoundedButton("이전", 0);    
 
-		 Font font=new Font("나눔고딕",Font.PLAIN,28);
-		 
+    	RoundedButton exit = new RoundedButton("이전", 0);    
+    	RoundedButton send = new RoundedButton("▲");    
         //버튼위치
         exit.setBounds( 50, 50, 120, 50);
         exit.setFont(font); 
         exit.setBackground(new Color(241,76,76));      
 		frm.getContentPane().add(exit);
+		send.setBounds( 300, 0, 50, 50);
+		send.setFont(font); 
+		frm.getContentPane().add(send);
 
-        
 		
-		
+		  ImageIcon chatimg = new
+		  ImageIcon(worry_suri.class.getResource("../testimage/채팅화면.png")); JLabel
+		  chatview = new JLabel(); chatview.setBounds(0, 0, 1980, 1080);
+		  frm.getContentPane().add(chatview); chatview.setIcon(chatimg);
+		  chatview.setBounds(150, 150, 1000, 700);
+		  chatview.setHorizontalAlignment(JLabel.RIGHT);
 
-	 JLabel chatview = new JLabel();
-	 chatview.setOpaque(true);
-	 chatview.setBackground(new Color(4,34,83));
+		 
+		 
+	//배경
 
-	 chatview.setBounds(0, 0, 1980, 1080); 
-	 chatview.setHorizontalAlignment(JLabel.CENTER); 
-	 frm.getContentPane().add(chatview);
+		  JLabel back = new JLabel(); back.setOpaque(true); back.setBackground(new
+		  Color(4,34,83)); back.setBounds(0, 0, 1980, 1080);
+		 back.setHorizontalAlignment(JLabel.CENTER); frm.getContentPane().add(back);
+
 	
-	        
 
-        // 프레임이 보이도록 설정
-        frm.setVisible(true);
+
+
+	 // 프레임이 보이도록 설정
+frm.setVisible(true);
+
+       
     }
     
 
@@ -91,8 +105,8 @@ class RoundedButton extends JButton {
 
 	public RoundedButton(String text) {
 		super(text);
-		c=new Color(51,203,51);
-		r=0;
+		c=new Color(67,168,255);
+		r=100;
 		decorate();
 	}
 

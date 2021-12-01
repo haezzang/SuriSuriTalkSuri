@@ -8,20 +8,61 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import chat.*;
+
+import chat.worry_suri;
+
 
 public class choice {
  
     public static void main(String[] args) {
  
+    	
+    	
+    	   // ★ 라벨에 넣을 아이콘 생성
+        ImageIcon suri1 = new ImageIcon(choice.class.getResource("../testimage/고민수리.png"));
+        ImageIcon suri2 = new ImageIcon(choice.class.getResource("../testimage/오늘수리.png"));
+        ImageIcon suri3 = new ImageIcon(choice.class.getResource("../testimage/운세수리.png"));
+        
+        
+        
         // 프레임 생성
         JFrame frm = new JFrame("수리 선택하기");
  
+        
+      	JLabel imgLbl1 = new JLabel();
+    	JLabel imgLbl2 = new JLabel();
+    	JLabel imgLbl3 = new JLabel();
+        
+     
+        // ★ 라벨에 아이콘 설정
+        imgLbl1.setIcon(suri1);
+        imgLbl2.setIcon(suri2);
+        imgLbl3.setIcon(suri3);
+        
+        // ★ 기타 설정
+        imgLbl1.setBounds(150, 150, 1000, 700);
+        imgLbl1.setHorizontalAlignment(JLabel.LEFT);
+        
+        imgLbl2.setBounds(450, 150, 1000, 700);
+        imgLbl2.setHorizontalAlignment(JLabel.CENTER);
+        
+        
+        imgLbl3.setBounds(0, 0, 1000, 700);
+        imgLbl3.setHorizontalAlignment(JLabel.RIGHT);
+
+        
+ 
+        frm.getContentPane().add(imgLbl1);
+        frm.getContentPane().add(imgLbl2);
+        frm.getContentPane().add(imgLbl3);
+        
         // 프레임 크기 설정
         frm.setSize(1980, 1080);
 
@@ -70,63 +111,33 @@ public class choice {
 		frm.getContentPane().add(b1);
 		frm.getContentPane().add(b2);
 		frm.getContentPane().add(b3);
-        
 		
-		
+
 		//그림넣기
-		
-	       	JLabel imgLbl1 = new JLabel();
-	    	JLabel imgLbl2 = new JLabel();
-	    	JLabel imgLbl3 = new JLabel();
-	        
-	        // ★ 라벨에 넣을 아이콘 생성
-	        ImageIcon suri1 = new ImageIcon(choice.class.getResource("../testimage/오늘수리.png"));
-	        ImageIcon suri2 = new ImageIcon(choice.class.getResource("../testimage/고민수리.png"));
-	        ImageIcon suri3 = new ImageIcon(choice.class.getResource("../testimage/운세수리.png"));
-	        // ★ 라벨에 아이콘 설정
-	        imgLbl1.setIcon(suri1);
-	        imgLbl2.setIcon(suri2);
-	        imgLbl3.setIcon(suri3);
-	        
-	        // ★ 기타 설정
-	        imgLbl1.setBounds(200, 150, 300, 600);
-	        imgLbl1.setHorizontalAlignment(JLabel.CENTER);
-	        
-	        imgLbl2.setBounds(800, 150, 300, 600);
-	        imgLbl2.setHorizontalAlignment(JLabel.CENTER);
-	        
-	        imgLbl2.setBounds(1400, 150, 300, 600);
-	        imgLbl3.setHorizontalAlignment(JLabel.CENTER);
-	        frm.getContentPane().add(imgLbl1);
-	        frm.getContentPane().add(imgLbl2);
-	        frm.getContentPane().add(imgLbl3);
-	        
-	        
-	        // 버튼을 눌렀을때
-	        b1.addActionListener(event -> {
-	        	new worry_suri();
-	        	frm.setVisible(false);  	
-	        });
-	 
-	        b2.addActionListener(event -> {
+		 JLabel choiceview = new JLabel();
+		 choiceview.setOpaque(true);
+		 choiceview.setBackground(new Color(4,34,83));
 
-	            frm.setVisible(false);  	
-	        });
+		 choiceview.setBounds(0, 0, 1980, 1080); 
+		 choiceview.setHorizontalAlignment(JLabel.CENTER); 
+		 frm.getContentPane().add(choiceview);
+		 
+		 
+	     
 	        
-	        b3.addActionListener(event -> {
-	  
-	            frm.setVisible(false);  	
-	        });
 	        
-			 JLabel choiceview = new JLabel();
-			 choiceview.setOpaque(true);
-			 choiceview.setBackground(new Color(4,34,83));
-
-			 choiceview.setBounds(0, 0, 1980, 1080); 
-			 choiceview.setHorizontalAlignment(JLabel.CENTER); 
-			 frm.getContentPane().add(choiceview);
+	     
+	        
+	
         // 프레임이 보이도록 설정
         frm.setVisible(true);
+        
+     	new worry_suri();
+
+        b1.addActionListener(event -> {
+        	new worry_suri();
+            frm.setVisible(true);  	
+        });
     }
  
 }
