@@ -20,7 +20,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalTime;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,26 +36,37 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import choice.choice;
 
-public class worry_suri extends Thread {
+
+public class worry_suri extends JFrame  {
 
 	// 상황 인덱스
 	static int index = 0;
-	static int btn = 0;
+	static int random = (int) (Math.random() * 10);
+	static String answer="";
 
-	// 답장 내용
-	static String[] answer = { "후련하게 멋진 선택하고 돌아오는거야!", "행운의 메세지에 당첨된 너. 오늘은 너의 날이야. 마음껏 즐겨!!",
-			"전혀 생각지 못했던 즐거움이 찾아올거야. 그동안 쌓였던 스트레스를 한 방에 날려버릴 만한 기분 좋은 소식!!",
-			"긍정적인 생각을 많이해봐. 좋은 에너지가 너에게 힘을 줄거야. 긍정의 힘은 생각보다 대단해!",
-			"다부진 너의 손 끝에서 많은 일들이 진행돼. 너 없이는 안될 일이야. 자부심을 갖고 진행해봐! 분명 눈에 띄는 성과가 나타날거야!",
-			"힘든 나날을 보내고 있다면, 이제 너에 대해 공부해보는건 어때?",
-			"매일 세 가지 일을 할 때마다 나 자신을 칭찬해봐! 산책을 하거나 즐겁게 놀거나! 마지막에 큰 보상을 기다리지 말고 모든 단계에서 나를 칭찬해봐",
-			"미루는 것은 최악의 적이 될 수 있어. 지금이라도 시작해보는 건 어때?", "열심히 지금처럼만 하다보면 다른 사람들보다 더 나은 날이 올 거야! ",
-			"너의 감정을 솔직하게 나눠봐. 너가 신뢰하는 다른 사람들에게 먼저 마음을 열어보는 것도 나쁘지 않아" };
+	
 
-	public static void main(String[] args) throws Exception {
 
+
+	
+		public worry_suri() {
+
+			// 0. 파일 준비
+			Path path = Paths.get("C:\\Users\\82108\\Desktop\\text\\worry\\answer.txt");
+			try {
+				// 1. 파일 전체 읽기
+				List<String> allLines = Files.readAllLines(path);
+				// 2. 3번째 라인 읽기
+				answer = allLines.get(random);
+				// 3. 결과 출력
+				System.out.println(answer); // line 3
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
 		// 프레임 생성
-		JFrame frm = new JFrame("수리 선택하기");
+		JFrame frm = new JFrame("고민수리와 채팅중");
 
 		// 프레임 크기 설정
 		frm.setSize(1980, 1080);
@@ -65,7 +80,7 @@ public class worry_suri extends Thread {
 		// 폰트설정
 		Font font = new Font("나눔고딕", Font.PLAIN, 25); // 버튼부분
 		Font font1 = new Font("나눔고딕", Font.PLAIN, 35); // 입력부분
-		Font font2 = new Font("나눔고딕", Font.PLAIN, 30); // 채팅부분
+		Font font2 = new Font("나눔고딕", Font.PLAIN, 28); // 채팅부분
 
 		// 텍스트area 생성(채팅)
 		JTextArea ta1 = new JTextArea(10, 20);
@@ -80,11 +95,10 @@ public class worry_suri extends Thread {
 		scrollPane.setVisible(true);
 
 		// 자동줄바꿈
-		ta1.setCaretPosition(ta1.getDocument().getLength());
+
 
 		// 글자 색깔
-		ta1.setForeground(Color.blue);
-
+		ta1.setForeground(Color.black);
 		// 텍스트필드 생성
 		RoundJTextField msg = new RoundJTextField(30);
 		frm.getContentPane().add(msg);
@@ -98,7 +112,7 @@ public class worry_suri extends Thread {
 		String ans2 = "안녕!!";
 		String ans3 = "됐고 고민 들어줘!";
 		// 버튼 생성
-		RoundedButton exit = new RoundedButton("이전", 0);
+		RoundedButton exit = new RoundedButton("이전", 1);
 		RoundedButton send = new RoundedButton("▲");
 		RoundedButton answer1 = new RoundedButton(ans1, 2);
 		answer1.setBounds(900, 740, 200, 50);
@@ -149,15 +163,19 @@ public class worry_suri extends Thread {
 		// 프레임이 보이도록 설정
 		frm.setVisible(true);
 
-//버튼이벤트
+		
+		
+		//이전
+		exit.addActionListener(event -> {
+			new choice();
+			frm.setVisible(false);
+	       
+	        });  
+	
+		//버튼이벤트
 		ta1.setText("흐흐흐흐흫흐흐흫흫\r\n" + "안녕하부엉?\r\n" + "나는 고민을 상담해주는 고민수리부엉이라네!");
-
-// 답장 버튼!
-		answer1.addActionListener(new ActionListener() {
-
-			int random = (int) (Math.random() * 10);
-
-			public void actionPerformed(ActionEvent e) {
+		// 답장 버튼!
+		answer1.addActionListener(event -> {
 
 				switch (index) {
 				case 0:
@@ -165,42 +183,61 @@ public class worry_suri extends Thread {
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
-					ta1.append("\n\t\t\t" + ans1 + "\n\n");
+					ta1.append("\n\t\t\t\t" + ans1 + "\n\n");
+					ta1.append("(너의 마음을 궁예보다.. 마음을 잘 꿰뚫어볼 수 있다네..)\n" + "고민이 있부엉?\n");
+					answer1.setEnabled(true);
+					answer2.setEnabled(true);
+					answer3.setEnabled(true);
+					answer1.setText("응");
+					answer2.setText("아니");
+					answer3.setText("그냥 들어와봤어");	
+					ta1.setForeground(Color.black);
 					index++;
 					break;
 
-				case 1:
-				
+				case 1:		
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
-					ta1.append("\n\t\t\t응\n\n");
+					ta1.append("\n\t\t\t\t응\n\n");
+					ta1.append("그래 내가 들어주지부엉!\n너의 마음속으로 고민을 생각하면\n내가 해결책을 제시해주겠부엉\n생각이 끝나면 버튼을 눌러라 부엉!");
+					answer1.setEnabled(true);
+					answer2.setEnabled(true);
+					answer3.setEnabled(true);
+					answer1.setText("생각끝났어!");
+					answer2.setText("그냥 안볼래");
+					answer3.setText("생각완료.."); 
 					index++;
 					break;
 
-				case 2:
-					ta1.append("\n\t\t\t생각끝났어!\n\n");
-					answer1.setEnabled(false);
-					answer2.setEnabled(false);
-					answer3.setEnabled(false);
-
-			
+				case 2:			
+					ta1.append("\n\t\t\t\t생각끝났어!\n\n");
 					
+					answer1.setEnabled(false);
+					answer2.setEnabled(false);
+					answer3.setEnabled(false);
+					//팝업창 띄우기
+					JOptionPane.showMessageDialog(null, answer,"해결책은?", JOptionPane.INFORMATION_MESSAGE);
+					ta1.setCaretPosition(ta1.getDocument().getLength());
+					answer1.setEnabled(true);
+					answer2.setEnabled(true);
+					answer3.setEnabled(true);
+
+					answer1.setText("고마워!");
+					answer2.setText("사기꾼이니?");
+					answer3.setText("잘가~");
+			
+
 					index++;
 					break;
 
 				case 3:
-					ta1.append("\n\t\t\t고마워\n\n");
+					ta1.append("\n\t\t\t\t고마워\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					
 					ta1.append("어떻게.. 고민은 해결 됐부엉? \r\n" + "도움이 되지 못했다면.. 크흠.. 그렇군.. \n다음 번에는 더욱더 꿰뚫어보겠부엉!\r\n"
 							+ "다음에도 고민이 있다면 찾아오시게나~");
 					break;
@@ -208,65 +245,21 @@ public class worry_suri extends Thread {
 
 			}
 
-		});
+		);
 
-		//2초뒤 답장
-		try {
-			Thread.sleep(2000);
-			switch (index) {
-			case 1:
-				ta1.append("(너의 마음을 궁예보다.. 마음을 잘 꿰뚫어볼 수 있다네..)\n" + "고민이 있부엉?\n");
-				answer1.setText("응");
-				answer2.setText("아니");
-				answer3.setText("그냥 들어와봤어");
-				answer1.setEnabled(true);
-				answer2.setEnabled(true);
-				answer3.setEnabled(true);
-				break;
-			case 2: 
-				ta1.append("그래 내가 들어주지부엉!\n너의 마음속으로 고민을 생각하면\n내가 해결책을 제시해주겠부엉\n생각이 끝나면 버튼을 눌러라 부엉!");
-				answer1.setEnabled(true);
-				answer2.setEnabled(true);
-				answer3.setEnabled(true);
-				answer1.setText("생각끝났어!");
-				answer2.setText("그냥 안볼래");
-				answer3.setText("생각완료..");
-				
-			case 3:
-				//팝업창 띄우기
-				JOptionPane.showMessageDialog(null, answer[index]);
-				answer1.setEnabled(true);
-				answer2.setEnabled(true);
-				answer3.setEnabled(true);
 
-				answer1.setText("고마워!");
-				answer2.setText("사기꾼이니?");
-				answer3.setText("잘가~");
-				
-			}
+	
+		answer2.addActionListener(event -> {
 
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		answer2.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
 				int random = (int) (Math.random() * 10);
 				switch (index) {
 				case 0:
-					ta1.append("\n\t\t\t안녕!!" + "\n\n");
+					ta1.append("\n\t\t\t\t안녕!!" + "\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				
 					ta1.append("(너의 마음을 궁예보다.. 마음을 잘 꿰뚫어볼 수 있다네..)\r\n" + "고민이 있부엉?\r\n" + "");
 					answer1.setEnabled(true);
 					answer2.setEnabled(true);
@@ -279,59 +272,55 @@ public class worry_suri extends Thread {
 					break;
 
 				case 1:
-					ta1.append("\n\t\t\t아니\n\n");
+					ta1.append("\n\t\t\t\t아니\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 					ta1.append(".. 알겠부엉.. 다음에도 찾아주길 바라네..");
+					
 					index++;
 					break;
 
 				case 2:
-					ta1.append("\n\t\t\t그냥 안볼래\n\n");
+					ta1.append("\n\t\t\t\t그냥 안볼래\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
-
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 					ta1.append("..(왜저러는거야.. 재수없어;;)ㅎㅎ알겠부엉 잘가시게나!");
 					index++;
+					break;
+				case 3:
+					ta1.setCaretPosition(ta1.getDocument().getLength());
+					ta1.append("\n\t\t\t\t사기꾼이니?\n\n");
+					answer1.setEnabled(false);
+					answer2.setEnabled(false);
+					answer3.setEnabled(false);
+	
+					ta1.append("어떻게.. 고민은 해결 됐부엉? \r\n" + "도움이 되지 못했다면.. 크흠.. 그렇군.. \n다음 번에는 더욱더 꿰뚫어보겠부엉!\r\n"
+							+ "다음에도 고민이 있다면 찾아오시게나~");
+
 					break;
 				}
 
 			}
-		});
+		);
 
-		answer3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 
-				int random = (int) (Math.random() * 10);
+
+		answer3.addActionListener(event -> {
+		
+
+	
 				switch (index) {
 				case 0:
 					// 사용자 대답
-					ta1.append("\n\t\t\t" + ans1 + "\n\n");
+					ta1.append("\n\t\t\t                " + ans3 + "\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				
 					ta1.append("(너의 마음을 궁예보다.. 마음을 잘 꿰뚫어볼 수 있다네..)\r\n" + "고민이 있부엉?\r\n" + "");
 					answer1.setEnabled(true);
 					answer2.setEnabled(true);
@@ -344,36 +333,25 @@ public class worry_suri extends Thread {
 					break;
 
 				case 1:
-					ta1.append("\n\t\t\t그냥 들어와봤어\n\n");
+					ta1.append("\n\t\t\t                그냥 들어와봤어\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+		
 					ta1.append(".. 알겠부엉.. 다음에도 찾아주길 바라네..");
 					index++;
 					break;
 
 				case 2:
-					ta1.append("\n\t\t\t생각완료..\n\n");
+					ta1.append("\n\t\t\t\t생각완료..\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block[InternetShortcut]
-URL=https://github.com/uyeah0/SuriSuriTalkSuri/blob/main/SuriSuriTalkSuri/src/chat/worry_suri.java
 
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(null, answer[index]);
+					JOptionPane.showMessageDialog(null, answer,"해결책은?", JOptionPane.INFORMATION_MESSAGE);
+					ta1.setCaretPosition(ta1.getDocument().getLength());
 					answer1.setEnabled(true);
 					answer2.setEnabled(true);
 					answer3.setEnabled(true);
@@ -385,27 +363,24 @@ URL=https://github.com/uyeah0/SuriSuriTalkSuri/blob/main/SuriSuriTalkSuri/src/ch
 					break;
 
 				case 3:
-					ta1.append("\n\t\t\t고마워\n\n");
+					ta1.append("\n\t\t\t\t고마워\n\n");
 					answer1.setEnabled(false);
 					answer2.setEnabled(false);
 					answer3.setEnabled(false);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 					ta1.append("어떻게.. 고민은 해결 됐부엉? \r\n" + "도움이 되지 못했다면.. 크흠.. 그렇군.. \n다음 번에는 더욱더 꿰뚫어보겠부엉!\r\n"
 							+ "다음에도 고민이 있다면 찾아오시게나~");
 					break;
 				}
-
 			}
-		});
-
+		);
 	}
 
+		
+	
+	public static void main(String[] args) {
+		new worry_suri();
+	}
 }
 
 //둥근 텍스트필드
