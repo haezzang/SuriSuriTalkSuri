@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -42,7 +43,8 @@ public class RoundedButton extends JButton {
 			graphics.setColor(color);
 		}
 		
-		graphics.fillRoundRect(0, 0, width-2, height, round, round);
+		// ¹öÆ° Å©±â
+		graphics.fillRoundRect(0, 0, width, height, round, round);
 		FontMetrics fontMetrics = graphics.getFontMetrics();
 		Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds();
 		
@@ -50,8 +52,9 @@ public class RoundedButton extends JButton {
 		int textX = (width - stringBounds.width) / 2;
 		int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent();
 		graphics.setColor(o);
-		graphics.setFont(getFont());
-		graphics.drawString(getText(), textX, textY);
+		graphics.setFont(new Font("ÈÞ¸Õ¿¢½ºÆ÷", Font.BOLD, 23));
+		//graphics.setFont(getFont());
+		graphics.drawString(getText(), textX-10, textY+5);
 		graphics.dispose();
 		super.paintComponent(g);
 	}
