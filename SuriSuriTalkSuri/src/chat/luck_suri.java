@@ -38,163 +38,136 @@ import choice.choice;
 
 public class luck_suri extends JFrame {
 
-	// ìƒí™© ì¸ë±ìŠ¤
+	JTextArea ta1;
+	RoundedButton answer1;
+	RoundedButton answer2;
+	RoundedButton answer3;
+	
+	RoundJTextField msg;
+	RoundedButton exit;
+	RoundedButton send;
+	int choice = 0; // Ãë¾÷ =0, ¿¬¾Ö = 1, ³²Æí = 2
+	
+	// »óÈ² ÀÎµ¦½º
+	
 	static int index = 0;
 	static int random = (int) (Math.random() * 9);
-	static int[] line1= {0,7,13,19,25,37,44,51,58}; //ì²˜ìŒì¤„
-	static int[] line2= {5,11,17,23,35,42,49,57,65}; //ë§ˆì§€ë§‰ì¤„
+	
+
 	static String answer = "";
-	static boolean alert = false; // ì…ë ¥ì•ˆë‚´
+	static boolean alert = false; // ÀÔ·Â¾È³»
 
 	public luck_suri() {
 
-		// 0. íŒŒì¼ ì¤€ë¹„
-		Path path = Paths.get("C:\\Users\\82108\\Desktop\\text\\today\\answer.txt");
-		try {
-			// 1. íŒŒì¼ ì „ì²´ ì½ê¸°
-			List<String> allLines = Files.readAllLines(path);
-			// 2. 3ë²ˆì§¸ ë¼ì¸ ì½ê¸°
-			for(int i=line1[random]; i<=line2[random]; i++) {
-				answer += allLines.get(i)+"\n";
-			}
-			
-			// 3. ê²°ê³¼ ì¶œë ¥
-			System.out.println(answer); // line 3
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// ÇÁ·¹ÀÓ »ı¼º
+		JFrame frame = new JFrame("¿î¼¼¼ö¸®¿Í Ã¤ÆÃÁß");
 
-		// í”„ë ˆì„ ìƒì„±
-		JFrame frm = new JFrame("ìš´ì„¸ìˆ˜ë¦¬ì™€ ì±„íŒ…ì¤‘");
+		// ÇÁ·¹ÀÓ Å©±â ¼³Á¤
+		frame.setSize(1980, 1080);
 
-		// í”„ë ˆì„ í¬ê¸° ì„¤ì •
-		frm.setSize(1980, 1080);
+		// ÇÁ·¹ÀÓÀ» È­¸é °¡¿îµ¥¿¡ ¹èÄ¡
+		frame.setLocationRelativeTo(null);
 
-		// í”„ë ˆì„ì„ í™”ë©´ ê°€ìš´ë°ì— ë°°ì¹˜
-		frm.setLocationRelativeTo(null);
+		// ÇÁ·¹ÀÓÀ» ´İ¾ÒÀ» ¶§ ¸Ş¸ğ¸®¿¡¼­ Á¦°ÅµÇµµ·Ï ¼³Á¤
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// í”„ë ˆì„ì„ ë‹«ì•˜ì„ ë•Œ ë©”ëª¨ë¦¬ì—ì„œ ì œê±°ë˜ë„ë¡ ì„¤ì •
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// ÆùÆ®¼³Á¤
+		Font font = new Font("³ª´®°íµñ", Font.PLAIN, 25); // ¹öÆ°ºÎºĞ
+		Font font1 = new Font("³ª´®°íµñ", Font.PLAIN, 28); // ÀÔ·ÂºÎºĞ
+		Font font2 = new Font("³ª´®°íµñ", Font.PLAIN, 28); // Ã¤ÆÃºÎºĞ
 
-		// í°íŠ¸ì„¤ì •
-		Font font = new Font("ë‚˜ëˆ”ê³ ë”•", Font.PLAIN, 25); // ë²„íŠ¼ë¶€ë¶„
-		Font font1 = new Font("ë‚˜ëˆ”ê³ ë”•", Font.PLAIN, 28); // ì…ë ¥ë¶€ë¶„
-		Font font2 = new Font("ë‚˜ëˆ”ê³ ë”•", Font.PLAIN, 28); // ì±„íŒ…ë¶€ë¶„
+		// ÅØ½ºÆ®area »ı¼º(Ã¤ÆÃ)
+		ta1 = new JTextArea(10, 20);
 
-		// í…ìŠ¤íŠ¸area ìƒì„±(ì±„íŒ…)
-		JTextArea ta1 = new JTextArea(10, 20);
-
-		// ìŠ¤í¬ë¡¤ ê¸¸ì´
+		// ½ºÅ©·Ñ ±æÀÌ
 		JScrollPane scrollPane = new JScrollPane(ta1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		ta1.setFont(font2);
 
 		scrollPane.setBounds(700, 120, 1000, 600);
-		frm.add(scrollPane);
+		frame.add(scrollPane);
 		scrollPane.setVisible(true);
 
-		// ìë™ì¤„ë°”ê¿ˆ
+		// ÀÚµ¿ÁÙ¹Ù²Ş
 
-		// ê¸€ì ìƒ‰ê¹”
+		// ±ÛÀÚ »ö±ò
 		ta1.setForeground(Color.black);
-		// í…ìŠ¤íŠ¸í•„ë“œ ìƒì„±
-		RoundJTextField msg = new RoundJTextField(30);
-		frm.getContentPane().add(msg);
+		// ÅØ½ºÆ®ÇÊµå »ı¼º
+		msg = new RoundJTextField(30);
+		frame.getContentPane().add(msg);
 		msg.setLayout(null);
 		msg.setBounds(720, 805, 900, 40);
 		msg.setFont(font1);
 		msg.setEnabled(false);
 
-		// ì´ˆë°˜ ë²„íŠ¼ ë‚´ìš© ì„¤ì •
-		String ans1 = "ë°˜ê°€ì›Œ! ";
-		String ans2 = "ìš°ì™• ";
-		String ans3 = "ë¹¨ë¦¬ ìš´ì„¸ ë³¼ë˜";
-		// ë²„íŠ¼ ìƒì„±
-		RoundedButton exit = new RoundedButton("ì´ì „", 1);
-		RoundedButton send = new RoundedButton("â–²");
-		RoundedButton answer1 = new RoundedButton(ans1, 2);
+		// ÃÊ¹İ ¹öÆ° ³»¿ë ¼³Á¤
+		String ans1 = "¹İ°¡¿ö! ";
+		String ans2 = "¿ì¿Õ ";
+		String ans3 = "»¡¸® ¿î¼¼ º¼·¡";
+		// ¹öÆ° »ı¼º
+		exit = new RoundedButton("ÀÌÀü", 1);
+		send = new RoundedButton("¡ã");
+		answer1 = new RoundedButton(ans1, 2);
 		answer1.setBounds(900, 740, 200, 50);
-		frm.getContentPane().add(answer1);
+		frame.getContentPane().add(answer1);
 		answer1.setFont(font);
 
-		RoundedButton answer2 = new RoundedButton(ans2, 2);
+		answer2 = new RoundedButton(ans2, 2);
 		answer2.setBounds(1120, 740, 200, 50);
-		frm.getContentPane().add(answer2);
+		frame.getContentPane().add(answer2);
 		answer2.setFont(font);
 
-		RoundedButton answer3 = new RoundedButton(ans3, 2);
+		answer3 = new RoundedButton(ans3, 2);
 		answer3.setBounds(1340, 740, 200, 50);
-		frm.getContentPane().add(answer3);
+		frame.getContentPane().add(answer3);
 		answer3.setFont(font);
-		// ë²„íŠ¼ì„¤ì •
+		// ¹öÆ°¼³Á¤
 		exit.setBounds(50, 50, 120, 50);
 		exit.setFont(font);
 		exit.setBackground(new Color(241, 76, 76));
-		frm.getContentPane().add(exit);
+		frame.getContentPane().add(exit);
 
 		send.setBounds(1630, 800, 50, 50);
 		send.setFont(font);
-		frm.getContentPane().add(send);
+		frame.getContentPane().add(send);
 
-		// ë°°ê²½
+		// ¹è°æ
 		JLabel grayback = new JLabel();
 		grayback.setOpaque(true);
 		grayback.setBackground(Color.LIGHT_GRAY);
 		grayback.setBounds(700, 800, 1000, 50);
 		grayback.setHorizontalAlignment(JLabel.RIGHT);
-		frm.getContentPane().add(grayback);
+		frame.getContentPane().add(grayback);
 
 		JLabel whiteback = new JLabel();
 		whiteback.setOpaque(true);
 		whiteback.setBackground(new Color(255, 255, 255));
 		whiteback.setBounds(700, 120, 1000, 600);
 		whiteback.setHorizontalAlignment(JLabel.RIGHT);
-		frm.getContentPane().add(whiteback);
+		frame.getContentPane().add(whiteback);
 
 		JLabel back = new JLabel();
 		back.setOpaque(true);
 		back.setBackground(new Color(4, 34, 83));
 		back.setBounds(0, 0, 1980, 1080);
 		back.setHorizontalAlignment(JLabel.CENTER);
-		frm.getContentPane().add(back);
+		frame.getContentPane().add(back);
 
-		// í”„ë ˆì„ì´ ë³´ì´ë„ë¡ ì„¤ì •
-		frm.setVisible(true);
+		// ÇÁ·¹ÀÓÀÌ º¸ÀÌµµ·Ï ¼³Á¤
+		frame.setVisible(true);
 
-		// ì´ì „
+		// ÀÌÀü
 		exit.addActionListener(event -> {
 			new choice();
-			frm.setVisible(false);
+			frame.setVisible(false);
 
 		});
 
-		send.setEnabled(false);
-		// ë²„íŠ¼ì´ë²¤íŠ¸
-		ta1.setText("ì—¬ê¸°ëŠ” ë¯¸ë¦¼ë¶€ì—‰ë§ˆì„ì— ì‚¬ëŠ” ë¶€ì—‰ì´ë“¤ì´ ëª¨ì—¬\n ìš´ì„¸ë¥¼ ë´ì£¼ê³  ê³ ë¯¼ì„ ë“¤ì–´ì£¼ëŠ” ê³³ì´ë¼ì˜¹\në‚˜ëŠ” ì·¨ì—…, ì—°ì• , ë‚¨í¸ìš´ ë´ì£¼ëŠ” ìš´ì„¸ìˆ˜ë¦¬ë¼ í•´ì˜¹");
-
-		send.addActionListener(event -> {
-			String birth = msg.getText();
-			// ì •í™•íˆ ì¼ëŠ”ì§€ êµ¬ë¶„í•˜ê¸°~
-			ta1.setCaretPosition(ta1.getDocument().getLength());
-			ta1.append("\n\t\t\t\t" + birth + "\n\n");
-			msg.setEnabled(false);
-			send.setEnabled(false);
-			answer1.setEnabled(true);
-			answer2.setEnabled(true);
-			answer3.setEnabled(true);
-			ta1.append("ì˜¤ ì¢‹ì•˜ì˜¹!! ì ì´ì œ ìš´ì„¸ë¥¼ ë³¼ê¹Œì˜¹~?");
-			answer1.setText("ê°€ë³´ìê³ ! ");
-			answer2.setText("ã„± ");
-			answer3.setText("í˜„ê¸°ì¦ë‚˜ ë¹¨ë¦¬ ë§í•´");
-			index++;
-
-		});
 
 		msg.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				String birth = msg.getText();
-				// ì •í™•íˆ ì¼ëŠ”ì§€ êµ¬ë¶„í•˜ê¸°~
+				// Á¤È®È÷ ½è´ÂÁö ±¸ºĞÇÏ±â~
 				ta1.setCaretPosition(ta1.getDocument().getLength());
 				ta1.append("\n\t\t\t\t" + birth + "\n\n");
 				msg.setEnabled(false);
@@ -202,161 +175,265 @@ public class luck_suri extends JFrame {
 				answer1.setEnabled(true);
 				answer2.setEnabled(true);
 				answer3.setEnabled(true);
-				ta1.append("ì˜¤ ì¢‹ì•˜ì˜¹!! ì ì´ì œ ìš´ì„¸ë¥¼ ë³¼ê¹Œì˜¹~?");
-				answer1.setText("ê°€ë³´ìê³ ! ");
-				answer2.setText("ã„± ");
-				answer3.setText("í˜„ê¸°ì¦ë‚˜ ë¹¨ë¦¬ ë§í•´");
-				index++;
+				ta1.append(" ¿À ÁÁ¾Ò¿Ë!! ÀÚ ÀÌÁ¦ ¿î¼¼¸¦ È®ÀÎÇØ º¼±î¿Ë~?");
+				answer1.setText("°¡º¸ÀÚ°í! ");
+				answer2.setText("¤¡ ");
+				answer3.setText("Çö±âÁõ³ª");
+				//index++;
 
 			}
 		});
-
-		// ë‹µì¥ ë²„íŠ¼!
-		answer1.addActionListener(event -> {
-
-			switch (index) {
-			case 0:
-				// ì‚¬ìš©ì ëŒ€ë‹µ
-				ta1.append("\n\t\t\t\t" + ans1 + "\n\n");
-				ta1.append("ì˜¹í™í™.. ë‚˜ì˜ íŠ¹ê¸°ë¥¼ ì‚´ë ¤ ì•„ì£¼ ë¹ ë¥´ê²Œ ìš´ì„¸ë¥¼ ë´ì£¼ê² ì˜¹!\nì˜¤ëŠ˜ì€ ì–´ë–¤ ìš´ì„¸ë¥¼ ë³´ëŸ¬ì™”ì˜¹?");
-				answer1.setText("ì·¨ì—…");
-				answer2.setText("ì—°ì• ");
-				answer3.setText("ë‚¨í¸");
-				index++;
-				break;
-			case 1:
-				ta1.append("\n\n\t\t\t\tì·¨ì—…\n");
-				ta1.append("\nì·¨ì—…ìš´ì´ ê¶ê¸ˆí–ˆì˜¹? ì§€ê¸ˆ ë‹¹ì¥ ì•Œì•„ë³´ìì˜¹!");
-				ta1.append("\në‹¹ì‹ ì˜ í•™ë…„ì€ ì–´ë–»ê²Œ ë˜ì˜¹?");
-				answer1.setText("1í•™ë…„");
-				answer2.setText("2í•™ë…„  ");
-				answer3.setText("3í•™ë…„ ");
-				index++;
-				break;
-
-			case 2:
-				ta1.append("\n\t\t\t\t1í•™ë…„");
-				ta1.append("\n\ní’‹í’‹í•œ ë‚˜ì´ì˜¹~ ë¶€ëŸ½ë‹¤ì˜¹");
-				ta1.append("\nìƒë…„ì›”ì¼ì„ ì•Œë ¤ì£¼ì‹œì˜¹!");
-				msg.setEnabled(true);
-				msg.setText("ex) 040602");
-				msg.setForeground(Color.lightGray);
+		
+		send.addActionListener(event -> {
+			String birth = msg.getText();
+			// Á¤È®È÷ ½è´ÂÁö ±¸ºĞÇÏ±â~
+			ta1.setCaretPosition(ta1.getDocument().getLength());
+			ta1.append("\n\t\t\t\t" + birth + "\n\n");
+			msg.setEnabled(false);
+			send.setEnabled(false);
+			answer1.setEnabled(true);
+			answer2.setEnabled(true);
+			answer3.setEnabled(true);
+			ta1.append(" ¿À ÁÁ¾Ò¿Ë!! ÀÚ ÀÌÁ¦ ¿î¼¼¸¦ È®ÀÎÇØ º¼±î¿Ë~?");
 			
-				send.setEnabled(true);
-				answer1.setEnabled(false);
-				answer2.setEnabled(false);
-				answer3.setEnabled(false);
-				break;
+			ta1.append("\n (¼ö¸®¼ö¸®Åå¼ö¸®¼ö¸®¼ö¸®¼ö¸®)");
+			
+			answer1.setText("°¡º¸ÀÚ°í! ");
+			answer2.setText("¤¡ ");
+			answer3.setText("Çö±âÁõ³ª");
+			//index++;
+		});
 
+		
+		
+		send.setEnabled(false);
+		// ¹öÆ°ÀÌº¥Æ®
+		ta1.setText(" ¿©±â´Â ¹Ì¸²ºÎ¾û¸¶À»¿¡ »ç´Â ºÎ¾ûÀÌµéÀÌ ¸ğ¿©\n ¿î¼¼¸¦ ºÁÁÖ°í °í¹ÎÀ» µé¾îÁÖ´Â °÷ÀÌ¶ó¿Ë\n ³ª´Â Ãë¾÷, ¿¬¾Ö, ³²Æí¿îÀ» ºÁÁÖ´Â ¿î¼¼¼ö¸®¶ó ÇØ¿Ë");
+
+		
+
+		// ´äÀå ¹öÆ°!
+		answer1.addActionListener(event->{
+			switch(index) {
+			case 0:
+				ta1.append("\n\t\t\t\t" + ans1 + "\n\n"); // ¹İ°©
+				allMent(index);
+				index++;
+				break;
+			case 1:
+				ta1.append("\n\n\t\t\t\tÃë¾÷\n");
+				ta1.append("\n Ãë¾÷¿îÀÌ ±Ã±İÇß¿Ë? Áö±İ ´çÀå ¾Ë¾Æº¸ÀÚ¿Ë!");
+				allMent(index); // ÇĞ³â
+				index++;
+				break;
+			case 2:	
+				ta1.append("\n\t\t\t\t1ÇĞ³â");
+				ta1.append("\n\n Ç²Ç²ÇÑ ³ªÀÌ¿Ë~ ºÎ·´´Ù¿Ë");
+				allMent(index);
+				index++;
+				break;
 			case 3:
+				ta1.append("\n (¼ö¸®¼ö¸®Åå¼ö¸®¼ö¸®¼ö¸®¼ö¸®)");
+				FileRead(choice);
+				JOptionPane.showMessageDialog(null, answer, "¿À´Ã¿î¼¼¶ó¿À~", JOptionPane.INFORMATION_MESSAGE);
 				ta1.setCaretPosition(ta1.getDocument().getLength());
-				ta1.append("\n\n\t\t\t\tê°€ë³´ìê³ !\n\n");
-				ta1.append("(ì•„ì†Œë¯¸ë¯¸í‚¤í‚¤ ìš°ìš° êµ¼ë°”ë¼ ì›€ì¹˜ë½ ê¿ˆì¹˜ë½)");
-				answer1.setEnabled(false);
-				answer2.setEnabled(false);
-				answer3.setEnabled(false);
+				allMent(index);
+				index++;
+				break;
+			case 4:
+				ta1.append("\n\t\t\t\tÀÌ°Ô ¹¹¾ß;");
+				ta1.append("\n\n °á°ú°¡ ¸¶À½¿¡ µéÁö ¾Ê¾Ò³ªº¸¿Ë..");
+				
+				ta1.append("\n ³Ê¹« ¸¶À½¿¡ ´ã¾ÆµÎÁö ¸¶½Ã¿Ë.. (»¡¸® Æ¢¾î¾ßÁö)");
+				ta1.append("\n ÁÁÀº ÇÏ·ç º¸³»°í ´ÙÀ½¿¡µµ ³ª ¿î¼¼¼ö¸®¸¦ Ã£¾ÆÁÖ¸é °í¸¿°Ú¿Ë!");
+				
+				answer1.setText("");
+				answer2.setText("");
+				answer3.setText("");
 				break;
 			}
-		}
-
-		);
-
-		answer2.addActionListener(event -> {
-
-			switch (index) {
+			
+			
+		});
+		
+		answer2.addActionListener(event->{
+			switch(index) {
 			case 0:
-				// ì‚¬ìš©ì ëŒ€ë‹µ
 				ta1.append("\n\t\t\t\t" + ans2 + "\n\n");
-				ta1.append("ì˜¹í™í™.. ë‚˜ì˜ íŠ¹ê¸°ë¥¼ ì‚´ë ¤ ì•„ì£¼ ë¹ ë¥´ê²Œ ìš´ì„¸ë¥¼ ë´ì£¼ê² ì˜¹!\nì˜¤ëŠ˜ì€ ì–´ë–¤ ìš´ì„¸ë¥¼ ë³´ëŸ¬ì™”ì˜¹?");
-				answer1.setText("ì·¨ì—…");
-				answer2.setText("ì—°ì• ");
-				answer3.setText("ë‚¨í¸");
+				allMent(index);
+				index++;
 				break;
 			case 1:
-				ta1.append("\n\t\t\t\tì—°ì• \n\n");
-				ta1.append("ì—°ì• ìš´ì´ë¼.. ì´ìª½ì€ ë‚´ê°€ ì „ë¬¸ì´ë¼ì˜¹~^^\në‹¹ì‹ ì˜ í•™ë…„ì€ ì–´ë–»ê²Œ ë˜ì˜¹?");
-				answer1.setText("ë‘ê·¼ë‘ê·¼");
-				answer2.setText("ë‹¹ì¥ ë³´ì—¬ì¤˜ ");
-				answer3.setText("ì„¤ë Œë‹¤");
+				ta1.append("\n\n\t\t\t\t¿¬¾Ö\n");
+				choice = 1;
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				ta1.append(" ¿¬¾Ö¿îÀÌ¶ó.. ÀÌÂÊÀº ³»°¡ Àü¹®ÀÌ¶ó¿Ë~^^");
+				allMent(index);
 				index++;
 				break;
-
 			case 2:
-				ta1.append("\n\t\t\t\të‹¹ì¥ ë³´ì—¬ì¤˜"
-						+ "");
-				JOptionPane.showMessageDialog(null, answer, "ì˜¤ëŠ˜ìš´ì„¸ë¼ì˜¤~", JOptionPane.INFORMATION_MESSAGE);
-				ta1.setCaretPosition(ta1.getDocument().getLength());
-				ta1.append("\n\nì˜¤ëŠ˜ ìš´ì„¸ëŠ” ë§ˆìŒì— ë“¤ì—ˆì†Œ??");
-				answer1.setText("í•˜ ëë‹¤ ê±;");
-				answer2.setText("ë„ˆë¬´ ì­ˆì•„ ã…ã…");
-				answer3.setText("ã…‡ã…‡");
+				ta1.append("\n\t\t\t\t2ÇĞ³â");
+				ta1.append("\n\n Ç²Ç²ÇÑ ³ªÀÌ¿Ë~ ºÎ·´´Ù¿Ë");
+				allMent(index);
 				index++;
 				break;
-
 			case 3:
+				ta1.append("\n (ÄôÆÄÄáµüÇ³ÆÎµÎÁØµÎÁØ)");
+				FileRead(choice);
+				JOptionPane.showMessageDialog(null, answer, "¿À´Ã¿î¼¼¶ó¿À~", JOptionPane.INFORMATION_MESSAGE);
 				ta1.setCaretPosition(ta1.getDocument().getLength());
-				ta1.append("\n\t\t\t\të„ˆë¬´ ì­ˆì•„ ã…ã…\n\n");
-				ta1.append("ì—­ì‹œë‚˜~~ ê·¸ëŒ€ë¥¼ ê¸°ë‹¤ë¦° ë³´ëŒì´ ìˆì†Œ ì˜¤ëŠ˜ë„ ì¢‹ì€ í•˜ë£¨ê°€ ë˜ì—ˆìœ¼ë©´ ì¢‹ê² êµ¬ë ¤\në‚˜ ì˜¤ëŠ˜ìˆ˜ë¦¬ë„ ê·¸ëŒ€ë¥¼ ìœ„í•œ í•˜ë£¨ë¥¼ ë³´ë‚´ê² ì†Œ!!");
-				answer1.setEnabled(false);
-				answer2.setEnabled(false);
-				answer3.setEnabled(false);
+				allMent(index);
+				index++;
+				break;
+			case 4:
+				ta1.append("\n\t\t\t\t¸¶À½¿¡ µé¾î!");
+				ta1.append("\n\n ¿ËÈ«È« ¸¶À½¿¡ µç´Ù´Ï ³ªÀÇ ±âºĞµµ ¸Å¿ì ÁÁ¾ÆÁ³¿Ë~~");
+				ta1.append("\n ´ÙÀ½¿¡µµ ³ª ¿î¼¼¼ö¸®¸¦ Ã£¾ÆÁØ´Ù¸é ´õ ²Ä²ÄÇÏ°í ÀÚ¼¼ÇÏ°Ô\n" +"¿î¼¼¸¦ ºÁÁÖ°Ú¿Ë! ");
+				answer1.setText("");
+				answer2.setText("");
+				answer3.setText("");
 				break;
 			}
-		}
-
-		);
-
-		answer3.addActionListener(event -> {
-
-			switch (index) {
+		});
+		
+		answer3.addActionListener(event->{
+			switch(index) {
 			case 0:
-				// ì‚¬ìš©ì ëŒ€ë‹µ
-				ta1.append("\n\t\t\t                " + ans3 + "\n\n");
-				ta1.append("ì˜¹í™í™.. ë‚˜ì˜ íŠ¹ê¸°ë¥¼ ì‚´ë ¤ ì•„ì£¼ ë¹ ë¥´ê²Œ ìš´ì„¸ë¥¼ ë´ì£¼ê² ì˜¹!\nì˜¤ëŠ˜ì€ ì–´ë–¤ ìš´ì„¸ë¥¼ ë³´ëŸ¬ì™”ì˜¹?");
-				answer1.setText("ì·¨ì—…");
-				answer2.setText("ì—°ì• ");
-				answer3.setText("ë‚¨í¸");
+				ta1.append("\n\t\t\t\t" + ans3 + "\n\n");
+				allMent(index);
+				index++;
 				break;
-
 			case 1:
-				ta1.append("\n\t\t\t\të‚¨í¸\n\n");
-				ta1.append("ë‚¨í¸ìš´!!! ë¯¸ë˜ ë‚¨í¸ì€ ëˆ„êµ¬ì¼ì§€.. ì•Œì•„ë³´ëŸ¬ ê°€ë³´ìì•„ì•„ì˜¹!");
-				answer1.setText("ë‘ê·¼ë‘ê·¼");
-				answer2.setText("ë‹¹ì¥ ë³´ì—¬ì¤˜ ");
-				answer3.setText("ì„¤ë Œë‹¤");
+				ta1.append("\n\n\t\t\t\t³²Æí¿î!!\n");
+				choice = 2;
+				ta1.append(" ¹Ì·¡ ³²ÆíÀº ´©±¸ÀÏÁö.. ¾Ë¾Æº¸·¯ °¡º¸ÀÚ¾Æ¾Æ¿Ë!");
+				allMent(index);
 				index++;
 				break;
-
 			case 2:
-
-				JOptionPane.showMessageDialog(null, answer, "ì˜¤ëŠ˜ìš´ì„¸ë¼ì˜¤~", JOptionPane.INFORMATION_MESSAGE);
-				ta1.append("\n\t\t\t\tì„¤ë Œë‹¤");
-				ta1.setCaretPosition(ta1.getDocument().getLength());
-				ta1.append("\n\nì˜¤ëŠ˜ ìš´ì„¸ëŠ” ë§ˆìŒì— ë“¤ì—ˆì†Œ??");
-				answer1.setText("í•˜ ëë‹¤ ê±;");
-				answer2.setText("ë„ˆë¬´ ì­ˆì•„ ã…ã…");
-				answer3.setText("ã…‡ã…‡");
+				ta1.append("\n\t\t\t\t3ÇĞ³â");
+				ta1.append("\n\n ³²Æí Ã£±â ÁÁÀº ³ªÀÌ¿Ë~");
+				allMent(index);
 				index++;
 				break;
-
 			case 3:
+				ta1.append("\n (µÕµÕÄí´çÅÁÄôÂ¦ÄôµûÇÎÆş)");
+				FileRead(choice);
+				JOptionPane.showMessageDialog(null, answer, "¿À´Ã¿î¼¼¶ó¿À~", JOptionPane.INFORMATION_MESSAGE);
 				ta1.setCaretPosition(ta1.getDocument().getLength());
-				ta1.append("\n\t\t\t\tã…‡ã…‡\n\n");
-				ta1.append("ì—­ì‹œë‚˜~~ ê·¸ëŒ€ë¥¼ ê¸°ë‹¤ë¦° ë³´ëŒì´ ìˆì†Œ ì˜¤ëŠ˜ë„ ì¢‹ì€ í•˜ë£¨ê°€ ë˜ì—ˆìœ¼ë©´ ì¢‹ê² êµ¬ë ¤\në‚˜ ì˜¤ëŠ˜ìˆ˜ë¦¬ë„ ê·¸ëŒ€ë¥¼ ìœ„í•œ í•˜ë£¨ë¥¼ ë³´ë‚´ê² ì†Œ!!");
-				answer1.setEnabled(false);
-				answer2.setEnabled(false);
-				answer3.setEnabled(false);
+				allMent(index);
+				index++;
+				break;
+			case 4:
+				ta1.append("\n\t\t\t\t(ÇÒ¸»¾øÀ½)");
+				ta1.append("\n\n ¤¾.. ¾Ë°Ú¿Ë.. Áñ°Å¿üÀ¸¸®¶ó »ı°¢ÇÏ¿Ë!");
+				ta1.append("\n ´ÙÀ½¿¡µµ ³ª ¿î¼¼¼ö¸®¸¦ Ã£¾ÆÁØ´Ù¸é °í¸¿°Ú¿Ë..");
+				ta1.append("\n ÁÁÀº ÇÏ·ç º¸³»½Ã¿Ë!!");
+				answer1.setText("");
+				answer2.setText("");
+				answer3.setText("");
 				break;
 			}
 		});
 	}
+	
+	// ¸ğµÎ¿¡°Ô µ¿ÀÏÇÑ ¸àÆ® ¸ğ¾ÆµÎ±â
+	public void allMent(int index) {
+		
+		switch(index) {
+		case 0:
+			ta1.append(" ¿ËÈ«È«.. ³ªÀÇ Æ¯±â¸¦ »ì·Á ¾ÆÁÖ ºü¸£°Ô ¿î¼¼¸¦ ºÁÁÖ°Ú¿Ë!\n ¿À´ÃÀº ¾î¶² ¿î¼¼¸¦ º¸·¯¿Ô¿Ë?");
+			answer1.setText("Ãë¾÷");
+			answer2.setText("¿¬¾Ö");
+			answer3.setText("³²Æí");
+			break;
+		case 1:
+			ta1.append("\n ´ç½ÅÀÇ ÇĞ³âÀº ¾î¶»°Ô µÇ¿Ë?");
+			answer1.setText("1ÇĞ³â");
+			answer2.setText("2ÇĞ³â  ");
+			answer3.setText("3ÇĞ³â ");
+			break;
+		case 2:
+			ta1.append("\n »ı³â¿ùÀÏÀ» ¾Ë·ÁÁÖ½Ã¿Ë!");
+			answer1.setText("");
+			answer2.setText("");
+			answer3.setText("");
+			msg.setEnabled(true);
+			msg.setText("ex) 040602");
+			msg.setForeground(Color.lightGray);
+		
+			send.setEnabled(true);
+			answer1.setEnabled(false);
+			answer2.setEnabled(false);
+			answer3.setEnabled(false);
+			break;
+			
+		case 3:
+			ta1.append("\n\n ¿À´Ã ¿î¼¼´Â ¾î¶®¿Ë??");
+			answer1.setText("ÀÌ°Ô ¹¹¾ß;");
+			answer2.setText("¸¶À½¿¡ µé¾î!");
+			answer3.setText("(ÇÒ¸»¾øÀ½)");
+			break;
+		}
+		
+		
+	}
+	
+	// ÆÄÀÏ ÀĞ¾î¿À±â
+	public void FileRead(int choice) {
 
+		int[] line_start = null; // Ã³À½ÁÙ
+		int[] line_finish = null; // ¸¶Áö¸·ÁÙ
+		
+		
+		// 0. ÆÄÀÏ ÁØºñ
+		Path path = Paths.get("C:/Users/luckEmployment_answer.txt");
+		
+
+		//Path pathHusband = Paths.get("C:/Users/luckSuri_husband.txt");
+				
+		switch (choice) {
+		case 0: // Ãë¾÷
+			path = Paths.get("C:/Users/luckEmployment_answer.txt");
+			line_start = new int[]{ 0, 5, 10, 15, 20, 25, 29, 32, 35, 38};
+			line_finish = new int[]{3, 8, 13, 18, 23, 27, 30, 33, 36, 39};
+			
+			break;
+		case 1:
+			path = Paths.get("C:/Users/luckLove_answer.txt");
+			line_start = new int[]{ 0, 7, 14, 20, 26, 31, 36, 42, 47, 52};
+			line_finish = new int[]{ 5, 12, 18, 24, 29, 24, 40, 45, 50, 69}; //¸¶Áö¸·ÁÙ
+			break;
+		default:
+			break;
+		}
+		
+		try { // 1. ÆÄÀÏ ÀüÃ¼ ÀĞ±â 
+			List<String> allLines = Files.readAllLines(path); // 2.
+			 // 3¹øÂ° ¶óÀÎ ÀĞ±â 
+			for(int i=line_start[random]; i<=line_finish[random]; i++) { 
+				answer +=allLines.get(i)+"\n"; }
+			 // 3. °á°ú Ãâ·Â 
+			System.out.println(answer); // line 3 
+			} catch (IOException e) {
+			 e.printStackTrace(); 
+			 
+		}
+		
+		
+	}
+	
 	public static void main(String[] args) {
 		new luck_suri();
 	}
 }
 
-//ë‘¥ê·¼ í…ìŠ¤íŠ¸í•„ë“œ
+//µÕ±Ù ÅØ½ºÆ®ÇÊµå
 class RoundJTextField extends JTextField {
 	private Shape shape;
 
@@ -384,19 +461,19 @@ class RoundJTextField extends JTextField {
 	}
 }
 
-//ë‘¥ê·¼ ë²„íŠ¼
+//µÕ±Ù ¹öÆ°
 class RoundedButton extends JButton {
 
-	Color c; // ë°°ê²½ìƒ‰ ì´ˆê¸°í™”
-	int r; // ë‘¥ê·¼ ê¸¸ì´
+	Color c; // ¹è°æ»ö ÃÊ±âÈ­
+	int r; // µÕ±Ù ±æÀÌ
 
 	public RoundedButton(String text, int i) {
 		super(text);
 
 		if (i == 1) {
-			c = new Color(241, 76, 76); // ë¹¨ê°•
+			c = new Color(241, 76, 76); // »¡°­
 		} else
-			c = new Color(67, 168, 255); // íŒŒë‘
+			c = new Color(67, 168, 255); // ÆÄ¶û
 
 		r = 50;
 		decorate();
@@ -404,7 +481,7 @@ class RoundedButton extends JButton {
 
 	public RoundedButton(String text) {
 		super(text);
-		c = new Color(67, 168, 255); // íŒŒë‘
+		c = new Color(67, 168, 255); // ÆÄ¶û
 		r = 100;
 		decorate();
 	}
@@ -416,7 +493,7 @@ class RoundedButton extends JButton {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		Color o = new Color(255, 255, 255); // ê¸€ììƒ‰ ê²°ì •
+		Color o = new Color(255, 255, 255); // ±ÛÀÚ»ö °áÁ¤
 		int width = getWidth();
 		int height = getHeight();
 		Graphics2D graphics = (Graphics2D) g;
@@ -433,7 +510,7 @@ class RoundedButton extends JButton {
 		Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds();
 		int textX = (width - stringBounds.width) / 2;
 		int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent();
-		graphics.setColor(o); // ë²„íŠ¼ ë°°ê²½ìƒ‰ ê²°ì¡
+		graphics.setColor(o); // ¹öÆ° ¹è°æ»ö °áÁ´
 		graphics.setFont(getFont());
 		graphics.drawString(getText(), textX, textY);
 		graphics.dispose();
